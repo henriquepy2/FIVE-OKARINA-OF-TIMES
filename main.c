@@ -4,7 +4,6 @@
 #include <time.h>
 
 
- 
 
 typedef enum {
     CLASSE_GUERREIRO,
@@ -70,7 +69,6 @@ typedef struct {
     int tamanho;
 } Fase;
 
-/* ---------- Entrada e utilidades ---------- */
 
 int lerInteiro(const char *mensagem, int minimo, int maximo) {
     char linha[100];
@@ -251,7 +249,7 @@ void inicializarMonstrosFase3(Monstro m[]) {
     Monstro dados[3] = {
         {"Troll das Sombras", "Um troll resistente que protege a fortaleza.", 185, 185, 27, 12, 6, 110},
         {"Elfo Corrompido", "Um antigo guardiao dominado pela escuridao.", 170, 170, 29, 10, 6, 115},
-        {"Gigante Feiticeiro", "O chefe final que controla a Fortaleza Sombria.", 260, 260, 32, 15, 8, 180}
+        {"Gigante Feiticeiro", "O chefe final que controla a Fortaleza Sombria.", 140, 260, 32, 15, 8, 180}
     };
     memcpy(m, dados, sizeof(dados));
 }
@@ -297,7 +295,7 @@ void mostrarTabuleiro(const Fase *fase, int posicao) {
         else printf("[ . ] ");
     }
     printf("\nP=Jogador L=Luta $=Tesouro +=Cura !=Armadilha M=Missao C=Chefe\n");
-    
+    printf("=======================================\n");
 }
 
 
@@ -408,6 +406,7 @@ int batalha(Personagem *jogador, Monstro *inimigo) {
     aplicarBonusAleatorio(jogador);
     return 1;
 }
+
 
 
 int executarEvento(TipoCasa tipo, Personagem *jogador, Monstro monstros[],
@@ -535,7 +534,6 @@ int jogarFase(Personagem *jogador, int numero, Monstro monstros[], int quantidad
     printf("========================================\n");
     return 1;
 }
-
 
 
 int main(void) {
