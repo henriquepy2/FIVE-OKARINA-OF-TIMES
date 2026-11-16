@@ -3,16 +3,8 @@
 #include <string.h>
 #include <time.h>
 
-/*
- * FIVE OKARINA OF TIME
- *
- * Esse é o jogo de RPG que fiz em C para a atividade.
- * O jogador escolhe um personagem e passa por três fases,
- * enfrentando monstros e encontrando alguns eventos pelo caminho.
- *
- * Para compilar:
- * gcc -std=c99 main.c -o jogo
- */
+
+ 
 
 typedef enum {
     CLASSE_GUERREIRO,
@@ -78,7 +70,7 @@ typedef struct {
     int tamanho;
 } Fase;
 
-/* Funções usadas em várias partes do jogo */
+/* ---------- Entrada e utilidades ---------- */
 
 int lerInteiro(const char *mensagem, int minimo, int maximo) {
     char linha[100];
@@ -89,7 +81,7 @@ int lerInteiro(const char *mensagem, int minimo, int maximo) {
         printf("%s", mensagem);
 
         if (fgets(linha, sizeof(linha), stdin) == NULL) {
-            printf("\nA entrada foi encerrada. O jogo sera finalizado.\n");
+            printf("\nEntrada encerrada. Encerrando o jogo.\n");
             exit(0);
         }
 
@@ -100,7 +92,7 @@ int lerInteiro(const char *mensagem, int minimo, int maximo) {
         }
 
         if (fim == linha || *fim != '\0' || valor < minimo || valor > maximo) {
-            printf("Opcao invalida. Escolha um numero entre %d e %d.\n",
+            printf("Entrada invalida. Digite um numero entre %d e %d.\n",
                    minimo, maximo);
         } else {
             return (int)valor;
@@ -118,7 +110,7 @@ int maior(int a, int b) {
 
 void pausar(void) {
     char linha[8];
-    printf("\nAperte ENTER para continuar...");
+    printf("\nPressione ENTER para continuar...");
     fgets(linha, sizeof(linha), stdin);
 }
 
@@ -133,7 +125,6 @@ const char *nomeClasse(ClassePersonagem classe) {
     }
 }
 
-/* Parte dos personagens */
 
 void inicializarPersonagens(Personagem personagens[]) {
     Personagem modelos[5] = {
@@ -190,7 +181,7 @@ void curar(Personagem *p, int quantidade) {
 
 void ganharXP(Personagem *p, int quantidade) {
     p->xp += quantidade;
-    printf("\nVoce ganhou %d pontos de experiencia!\n", quantidade);
+    printf("\nVoce recebeu %d pontos de experiencia!\n", quantidade);
 
     while (p->xp >= p->nivel * 100) {
         p->xp -= p->nivel * 100;
@@ -236,7 +227,7 @@ void aplicarBonusAleatorio(Personagem *p) {
     }
 }
 
-/* Monstros e montagem das fases */
+
 
 void inicializarMonstrosFase1(Monstro m[]) {
     Monstro dados[3] = {
@@ -306,10 +297,10 @@ void mostrarTabuleiro(const Fase *fase, int posicao) {
         else printf("[ . ] ");
     }
     printf("\nP=Jogador L=Luta $=Tesouro +=Cura !=Armadilha M=Missao C=Chefe\n");
-    printf("=======================================\n");
+    
 }
 
-/* Sistema de batalha */
+
 
 int habilidadeEspecial(Personagem *p, Monstro *m, int dado) {
     int dano = 0;
@@ -366,10 +357,10 @@ int batalha(Personagem *jogador, Monstro *inimigo) {
             dado = rolarDado(20);
             printf("\nTeste de fuga: dado %d + agilidade %d.\n", dado, jogador->agilidade);
             if (dado + jogador->agilidade >= 22) {
-                printf("Voce conseguiu escapar, mas nao ganhou recompensa.\n");
+                printf("Voce conseguiu fugir! Nao recebera recompensa.\n");
                 return 2;
             }
-            printf("Nao deu para fugir! O monstro vai aproveitar para atacar.\n");
+            printf("A fuga falhou! O monstro aproveita para atacar.\n");
         } else if (opcao == ACAO_DEFENDER) {
             defesaAtiva = 1;
             printf("\nVoce se preparou para reduzir o proximo dano.\n");
@@ -412,13 +403,12 @@ int batalha(Personagem *jogador, Monstro *inimigo) {
         return 0;
     }
 
-    printf("\nBoa! Voce derrotou %s!\n", inimigo->nome);
+    printf("\nParabens! Voce derrotou %s!\n", inimigo->nome);
     ganharXP(jogador, inimigo->xpRecompensa);
     aplicarBonusAleatorio(jogador);
     return 1;
 }
 
-/* O que acontece em cada casa do tabuleiro */
 
 int executarEvento(TipoCasa tipo, Personagem *jogador, Monstro monstros[],
                    int quantidadeMonstros, int *derrotados, int fase) {
@@ -427,7 +417,7 @@ int executarEvento(TipoCasa tipo, Personagem *jogador, Monstro monstros[],
 
     switch (tipo) {
         case CASA_VAZIA:
-            printf("\nEssa casa esta vazia. Por enquanto, tudo tranquilo.\n");
+            printf("\nCasa vazia. O caminho esta tranquilo.\n");
             break;
 
         case CASA_TESOURO:
@@ -474,7 +464,7 @@ int executarEvento(TipoCasa tipo, Personagem *jogador, Monstro monstros[],
                 break;
             }
 
-            printf("\nUm inimigo apareceu no seu caminho!\n");
+            printf("\nUm inimigo apareceu!\n");
             {
                 int resultado = batalha(jogador, &monstros[indice]);
                 if (resultado == 0) return -1;
@@ -546,7 +536,7 @@ int jogarFase(Personagem *jogador, int numero, Monstro monstros[], int quantidad
     return 1;
 }
 
-/* Começo do jogo */
+
 
 int main(void) {
     Personagem personagens[5];
@@ -597,7 +587,7 @@ int main(void) {
     printf("        VOCE SALVOU O MUNDO!\n");
     printf("========================================\n");
     mostrarPersonagem(&jogador);
-    printf("\nValeu por jogar FIVE OKARINA OF TIME!\n");
+    printf("\nObrigado por jogar FIVE OKARINA OF TIME!\n");
 
     return 0;
 }
