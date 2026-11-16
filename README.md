@@ -4,7 +4,7 @@
 https://photos.app.goo.gl/KKQ6MUnfGW66ZYRT8
 # FIVE OKARINA OF TIME
 
-Jogo de tabuleiro RPG em modo texto, desenvolvido em linguagem C99.
+
 
 ## História
 
