@@ -100,6 +100,5 @@ jogo.exe
 - `enum`: representa classes, tipos de casa e ações de combate.
 - Ponteiros: funções como `receberDano`, `curar`, `ganharXP`, `aplicarBonusAleatorio` e `batalha` atualizam diretamente os dados do personagem ou monstro.
 
-## Observações para a entrega
 
-Preencha seus dados de identificação conforme solicitado pelo professor. Adicione o link do repositório e do vídeo de demonstração quando estiverem disponíveis. Revise e teste o jogo no computador usado para a gravação.
+
